@@ -125,7 +125,7 @@ export default function ConfirmEmail(props) {
                             <button
                                 onClick={(e)=>{
                                     e.preventDefault();
-                                    props.setPage("resetPassword");
+                                    resendVerificationCode();
                                 }}
                                 variant="body2"
                                 className={classes.button}
