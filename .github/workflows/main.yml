@@ -40,7 +40,7 @@ jobs:
         aws s3 sync --acl public-read --delete build/ s3://${{secrets.AWS_S3_BUCKET}}
     - name: deploy lambda
       run: |
-        zip -r lambdas.zip lambdas && aws lambda update-function-code --function-name GetStartedLambdaProxyIntegration --zip-file fileb://$(pwd)/lambdas.zip
+        zip -r lambdas.zip lambdas/* && aws lambda update-function-code --function-name GetStartedLambdaProxyIntegration --zip-file fileb://$(pwd)/lambdas.zip
     - name: invalidate
       run: |
         aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths /index.html
