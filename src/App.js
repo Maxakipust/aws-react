@@ -22,16 +22,17 @@ class App extends React.Component{
       .then((res)=>res.json())
       .then((response)=>{
         console.log(response);
+        this.setState({data:response})
       })
   }
 
   render() {
-    if(this.state.data){
+    if(!this.state.data){
       return <div><h1>Loading</h1></div>
     }
     return (
       <div>
-        <h1>It works</h1>
+        <h1>{this.state.data}</h1>
       </div>
     )
   }
