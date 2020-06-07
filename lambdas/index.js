@@ -1,7 +1,4 @@
 exports.handler = async (event) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify('Hello world 2'),
-    };
+    const response = 'Hello world 3';
     return response;
 };
