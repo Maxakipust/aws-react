@@ -39,18 +39,8 @@ jobs:
       run: |
         aws s3 sync --acl public-read --delete build/ s3://${{secrets.AWS_S3_BUCKET}}
     - name: deploy lambda
-      uses: appleboy/lambda-action@master
-      with:
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        # aws_region: ${{ secrets.AWS_REGION }}
-        function_name: GetStartedLambdaProxyIntegration
-        source: lambdas/index.js
+      run: |
+        zip -r lambdas.zip lambdas && aws lambda update-function-code --function-name GetStartedLambdaProxyIntegration --zip-file fileb://$(pwd)/lambdas.zip
     - name: invalidate
-      uses: chetan/invalidate-cloudfront-action@master
-      env:
-        DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
-        PATHS: '/index.html'
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths /index.html
