@@ -1,42 +1,34 @@
 import React from 'react';
+import SignIn from './login'
+import ResetPassword from "./ResetPassword";
+import SignUp from "./SignUp";
+import LoggedIn from "./loggedin";
+import ConfirmEmail from "./ConfirmEmail";
 
 class App extends React.Component{
 
   constructor(props){
     super(props);
     this.state={
-      data:null,
+      page:"login",
     }
   }
 
-  componentDidMount(){
-    fetch(
-      " https://88ilaxa0x8.execute-api.us-east-1.amazonaws.com/test/api",
-      {
-        mode:"cors",
-        headers:{
-          day:"Today"
-        }
-      }
-    )
-      .then((res)=>res.json())
-      .then((response)=>{
-        console.log(response);
-        this.setState({data:response})
-      })
+  setPage(page, others){
+      this.setState({page, ...others});
   }
+
 
   render() {
-    if(!this.state.data){
-      return <div className="app">
-        <h1>Loading</h1>
-      </div>
-    }
-    return (
-      <div className="app">
-        <h1>{JSON.stringify(this.state.data)}</h1>
-      </div>
-    )
+      let boundSetPage = this.setPage.bind(this);
+      let getPage = {
+          login:<SignIn setPage={boundSetPage}/>,
+          resetPassword:<ResetPassword setPage={boundSetPage}/>,
+          signUp:<SignUp setPage={boundSetPage}/>,
+          success:<LoggedIn setPage={boundSetPage} accessToken={this.state.accessToken} cognitoUser={this.state.cognitouser}/>,
+          verifyEmail:<ConfirmEmail setPage={boundSetPage} email={this.state.email}/>
+      };
+      return getPage[this.state.page]
   }
 }
 
