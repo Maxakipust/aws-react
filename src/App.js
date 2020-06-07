@@ -28,10 +28,12 @@ class App extends React.Component{
 
   render() {
     if(!this.state.data){
-      return <div><h1>Loading</h1></div>
+      return <div className="app">
+        <h1>Loading</h1>
+      </div>
     }
     return (
-      <div>
+      <div className="app">
         <h1>{this.state.data}</h1>
       </div>
     )
