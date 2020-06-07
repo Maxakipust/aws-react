@@ -47,6 +47,7 @@ jobs:
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: GetStartedLambdaProxyIntegration
         source: lambdas/index.js
+        dry_run: true
     - name: invalidate
       uses: chetan/invalidate-cloudfront-action@master
       env:
