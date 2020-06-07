@@ -2,6 +2,13 @@ import React from 'react';
 
 class App extends React.Component{
 
+  constructor(props){
+    super(props);
+    this.state={
+      data:null,
+    }
+  }
+
   componentDidMount(){
     fetch(
       " https://88ilaxa0x8.execute-api.us-east-1.amazonaws.com/test/api",
@@ -19,6 +26,9 @@ class App extends React.Component{
   }
 
   render() {
+    if(this.state.data){
+      return <div><h1>Loading</h1></div>
+    }
     return (
       <div>
         <h1>It works</h1>
