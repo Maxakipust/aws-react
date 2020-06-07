@@ -34,7 +34,7 @@ class App extends React.Component{
     }
     return (
       <div className="app">
-        <h1>{this.state.data}</h1>
+        <h1>{JSON.stringify(this.state.data)}</h1>
       </div>
     )
   }

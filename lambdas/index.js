@@ -1,4 +1,4 @@
 exports.handler = async (event) => {
-    const response = 'Hello world 3';
+    const response = event;
     return response;
 };
