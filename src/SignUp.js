@@ -48,9 +48,18 @@ export default function SignUp(props) {
     let [email, setEmail] = React.useState('');
     let [password, setPassword] = React.useState('');
     let [name, setName] = React.useState('');
+    let [passwordError, setPasswordError] = React.useState(false);
+
+    let checkPassword = ()=>{
+        setPasswordError(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/));
+    };
 
     let onSubmit = (e)=>{
         e.preventDefault();
+
+        if(passwordError){
+            return;
+        }
 
         let userPool = new CognitoUserPool(config);
 
@@ -129,7 +138,12 @@ export default function SignUp(props) {
                         id="password"
                         autoComplete="current-password"
                         value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
+                        onChange={(e)=>{
+                            setPassword(e.target.value);
+                            checkPassword();
+                        }}
+                        error={passwordError}
+                        helperText={passwordError?'Password must contain a number, an uppercase letter, a lowercase letter, and be longer than 6 characters':null}
                     />
                     <Button
                         type="submit"
