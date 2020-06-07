@@ -1,6 +1,7 @@
-'use strict';
-console.log('Loading hello world function');
- 
 exports.handler = async (event) => {
-    return "hello world"
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Hello world 2'),
+    };
+    return response;
 };
